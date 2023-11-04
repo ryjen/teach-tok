@@ -1,0 +1,1 @@
+export { TeachTokView } from './TeachTokView'

@@ -1,10 +1,10 @@
-import {configureStore} from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 
-import {rootReducer} from './Reducer'
-import {rootMiddleware} from './Middleware'
+import { rootReducer } from "./Reducer";
+import { rootMiddleware } from "./Middleware";
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: rootMiddleware
-})
-
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(rootMiddleware),
+});

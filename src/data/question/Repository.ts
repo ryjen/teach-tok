@@ -1,15 +1,13 @@
-import {teachTokApi} from '@data/client'
+import type { Api } from "@data/types";
 
-type Api = typeof teachTokApi
+export class QuestionRepository {
+  api: Api;
 
-export class QuestionRespository {
-  api: Api
-
-  constructor({api}: {api: Api}) {
-    this.api = api
+  constructor({ api }: { api: Api }) {
+    this.api = api;
   }
 
-  nextQuestion = () => this.api.useForYouQuery()
+  nextQuestion = () => this.api.useForYouQuery();
 
-  revealAnswer = (id: string) => this.api.useRevealQuery(id)
+  revealAnswer = (id: string) => this.api.useRevealQuery(id);
 }

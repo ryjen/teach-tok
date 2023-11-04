@@ -1,10 +1,11 @@
-import React from 'react'
-import {View} from 'react-native'
+import type { Question } from "@domain/types";
+import React from "react";
+import { View } from "react-native";
 
 interface Props {
-  question: Question
+  question: Question;
 }
 
-const QuestionView = (props: Props) => {
-   return (<View />)
-}
+export const QuestionView = (props: Props) => {
+  return <View />;
+};

@@ -6,22 +6,26 @@ export const PlaylistComponent = () => {
   const { question } = useQuestionView();
   return (
     <View style={styles.container}>
-      <Icons name="play-box-multiple" color="white" size={18} />
+      <Icons name="play-box-multiple" color="white" size={22} />
       <Text style={styles.playlist}>{question?.playlist}</Text>
-      <Icons name="chevron-right" color="white" size={18} />
+      <Icons name="chevron-right" color="white" size={24} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: 50,
+    flex: 0,
+    height: 45,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
     flexDirection: "row",
     backgroundColor: "dimgray",
   },
   playlist: {
     flex: 2,
+    marginLeft: 10,
     color: "white",
   },
 });

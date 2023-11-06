@@ -7,7 +7,7 @@ export const useTimeInApp = () => {
   const dispatch = useDispatch();
 
   const refreshTime = () => {
-    dispatch(updateTimeInApp);
+    dispatch(updateTimeInApp());
   };
 
   useEffect(() => {

@@ -15,12 +15,11 @@ export const HeaderComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
+    //justifyContent: "space-evenly",
+    marginTop: 30,
+    padding: 20,
+    //alignItems: "center",
     flexDirection: "row",
-  },
-  tab: {
-    flex: 2,
-    borderBottomColor: "white",
-    borderBottomWidth: 6,
   },
 });

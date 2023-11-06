@@ -81,7 +81,7 @@ export const ForYouScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <Animated.View
         {...panResponder.panHandlers}
         style={[{ transform: [{ translateY: pan }] }, styles.box]}
@@ -99,6 +99,9 @@ export const ForYouScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   box: {
     flex: 1,
   },

@@ -18,26 +18,32 @@ export const QuestionComponent = () => {
           return <OptionComponent key={option.id} option={option} />;
         })}
       </View>
-      <Text style={styles.description}>{question?.description}</Text>
+      <View style={styles.description}>
+        <Text style={styles.descriptionText}>{question?.description}</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "stretch",
+    flex: 3,
+    padding: 20,
+    justifyContent: "space-between",
   },
   question: {
     flex: 1,
-    backgroundColor: "gray",
     borderRadius: 6,
   },
   questionText: {
     fontSize: 24,
+    padding: 10,
+    borderRadius: 6,
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
     color: "white",
     fontWeight: "bold",
   },
-  options: {},
-  description: {},
+  options: { flex: 1 },
+  description: { flex: 1 },
+  descriptionText: {},
 });

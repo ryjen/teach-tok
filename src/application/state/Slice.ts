@@ -10,7 +10,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     updateTimeInApp: (state: State) => {
-      state.timeInApp = Date.now();
+      state.timeInApp = Date.now() / 1000;
     },
   },
 });

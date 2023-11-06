@@ -7,7 +7,7 @@ export class QuestionRepository {
     this.api = api;
   }
 
-  nextQuestion = () => this.api.useForYouQuery();
+  nextQuestion = (current: number) => this.api.useForYouQuery(current);
 
   revealAnswer = (id: string) => this.api.useRevealQuery(id);
 }

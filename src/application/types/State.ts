@@ -1,4 +1,8 @@
-import {store} from '@application/store'
+import { store } from "@application/store";
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export interface AppState {
+  timeInApp: number;
+}

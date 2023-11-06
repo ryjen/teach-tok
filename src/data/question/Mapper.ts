@@ -5,9 +5,14 @@ import type {
   OptionResponse,
 } from "@data/types";
 import type { Question, User, Answer } from "@domain/types";
+import FastImage from "react-native-fast-image";
 
-export const questionForYou = (data: ForYouResponse) =>
-  <Question>{
+export const questionForYou = (data: ForYouResponse) => {
+  // TODO: move to presentation layer
+  console.log(`preloading ${data.image}`);
+  FastImage.preload([{ uri: data.image, priority: FastImage.priority.high }]);
+
+  return <Question>{
     id: data.id,
     playlist: data.playlist,
     description: data.description,
@@ -16,6 +21,7 @@ export const questionForYou = (data: ForYouResponse) =>
     options: data.options.map(domainAnswer),
     user: domainUser(data.user),
   };
+};
 
 export const domainAnswer = (data: OptionResponse) =>
   <Answer>{ id: data.id, value: data.answer };

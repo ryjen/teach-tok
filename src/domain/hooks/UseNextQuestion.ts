@@ -1,36 +1,45 @@
-import { useEffect } from "react";
-import { teachTokApi } from "@data/client";
-import { QuestionRepository } from "@data/question";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectNextQuestion,
-  prevQuestionAction,
-  nextQuestionAction,
-  addQuestionAction,
-} from "@data/question";
-
-const questionRepository = new QuestionRepository({ api: teachTokApi});
+import { useState, useEffect } from "react";
+import { teachTokApi as api } from "@data/client";
 
 export const useNextQuestion = () => {
-  const dispatch = useDispatch();
+  // use an internal index to track question request tags
+  const [current, setCurrent] = useState(0);
 
-  const { data, isError, isLoading, refetch } =
-    questionRepository.nextQuestion();
+  const [isPrefetched, setIsPrefetched] = useState(false);
 
-  useEffect(() => {
-    if (isError == false && isLoading == false && data != null) {
-      dispatch(addQuestionAction(data));
-    }
-  }, [isError, isLoading, data]);
+  console.log(`getting question ${current}`);
 
-  const question = useSelector(selectNextQuestion);
+  const { data: question, isError, isLoading } = api.useForYouQuery(current);
 
-  const next = () => {
-    refetch();
-    dispatch(nextQuestionAction);
+  // TODO: move prefetch to repository and stay in data layer
+  const prefetch = api.usePrefetch("forYou");
+
+  const prefetchNext = () => {
+    console.log(`prefetching question ${current + 1}`);
+    prefetch(current + 1, { force: true });
+    setIsPrefetched(true);
   };
 
-  const prev = () => dispatch(prevQuestionAction);
+  // automatically prefetch
+  useEffect(() => {
+    prefetchNext();
+  }, [prefetchNext]);
 
-  return { data: question, isError, isLoading, next, prev };
+  const next = () => {
+    setCurrent(current + 1);
+  };
+
+  const prev = () => {
+    if (current > 0) {
+      setCurrent(current - 1);
+    }
+  };
+
+  return {
+    question,
+    isError,
+    isLoading: isLoading || !isPrefetched,
+    next,
+    prev,
+  };
 };

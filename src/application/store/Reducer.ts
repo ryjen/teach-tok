@@ -1,8 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { questionReducer } from "@data/question";
 import { teachTokApi } from "@data/client";
+import { reducer as appReducer } from "@application/state";
 
 export const rootReducer = combineReducers({
-  questions: questionReducer,
+  app: appReducer,
   [teachTokApi.reducerPath]: teachTokApi.reducer,
 });

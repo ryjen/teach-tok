@@ -11,10 +11,7 @@ export const teachTokApi = createApi({
   endpoints: (builder) => ({
     forYou: builder.query<Question, number>({
       query: () => "/for_you",
-      onCacheEntryAdded: (data, key) => {
-        console.log(`caching ${key}.${data.id}`);
-        return `${key}.${data.id}`;
-      },
+      onCacheEntryAdded: (data, key) => `${key}.${data.id}`,
       transformResponse: (data: ForYouResponse): Question =>
         questionForYou(data),
     }),

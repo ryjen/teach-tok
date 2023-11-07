@@ -10,8 +10,6 @@ interface Props {
 export const QuestionBackgroundComponent = ({ children }: Props) => {
   const question = useQuestionView();
 
-  console.log(`rendering ${question?.image}`);
-
   return (
     <View style={styles.container}>
       <FastImage

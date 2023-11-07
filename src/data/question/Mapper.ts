@@ -9,7 +9,6 @@ import FastImage from "react-native-fast-image";
 import { range as rand } from "@domain/Random";
 
 export const questionForYou = (data: ForYouResponse) => {
-  console.log(`preloading image ${data.image}`);
   FastImage.preload([{ uri: data.image, priority: FastImage.priority.high }]);
 
   return <Question>{

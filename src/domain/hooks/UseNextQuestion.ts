@@ -6,26 +6,22 @@ import { teachTokApi as api } from "@data/client";
 export const useNextQuestion = (index: number) => {
   const questions = useSelector(selectQuestions);
 
-  const {
-    data: question,
-    isError,
-    isLoading,
-    refetch,
-  } = api.useForYouQuery(index);
+  const data = api.useForYouQuery(index);
+
+  const { data: question, isError, isLoading, refetch } = data;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (question && isError == false && isLoading == false) {
       if (
-        // already exists and less the 3 questions exist
+        // already exists and less the 3 questions exist for a demo
+	// TODO: fix api
         questions.findIndex((q) => q.id == question.id) !== -1 &&
         questions.length < 3
       ) {
-        console.log(`looking for another question`);
         refetch();
       } else {
-        console.log(`adding ${question?.id}`);
         dispatch(addQuestionAction(question));
       }
     }

@@ -11,19 +11,18 @@ export const TimeSpentComponent = ({ style }: Props) => {
   const { time } = useQuestionView();
   return (
     <View style={[styles.container, style]}>
-      <Icons name={"clock"} size={24} color="rgba(255, 255, 255, 0.5)" />
+      <Icons name={"clock"} size={24} color={styles.text.color} />
       <Text style={styles.text}>{hms(time)}</Text>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
     flexDirection: "row",
     alignItems: "center",
   },
   text: {
     marginLeft: 5,
-    color: "rgba(255, 255, 255, 0.5)",
+    color: "white",
   },
 });

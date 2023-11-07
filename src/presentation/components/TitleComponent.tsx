@@ -4,7 +4,7 @@ interface Props {
   style: React.CSSProperties;
 }
 
-export const TabComponent = ({ style }: Props) => (
+export const TitleComponent = ({ style }: Props) => (
   <View style={[styles.container, style]}>
     <View style={styles.content}>
       <Text style={styles.text}>For You</Text>
@@ -15,16 +15,18 @@ export const TabComponent = ({ style }: Props) => (
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
+    flex: 0,
   },
   content: {
     flex: 0,
+    alignSelf: "center",
+    justifyContent: "center",
   },
   text: {
     color: "white",
-    minWidth: 18,
+    fontSize: 16,
+    marginBottom: 5,
+    fontWeight: "bold",
   },
   border: {
     flex: 0,

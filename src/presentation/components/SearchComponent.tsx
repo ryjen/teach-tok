@@ -1,4 +1,4 @@
-import React from "react";
+import React, { View } from "react-native";
 import { MaterialIcons as Icons } from "@expo/vector-icons";
 
 interface Props {
@@ -6,5 +6,7 @@ interface Props {
 }
 
 export const SearchComponent = ({ style }: Props) => (
-  <Icons name={"search"} size={24} color="white" style={style} />
+  <View style={style}>
+    <Icons name={"search"} size={24} color="white" />
+  </View>
 );

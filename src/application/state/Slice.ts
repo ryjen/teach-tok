@@ -2,7 +2,7 @@ import type { AppState as State } from "@application/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  timeInApp: 0,
+  timeInApp: Date.now(),
 };
 
 const slice = createSlice({
@@ -10,7 +10,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     updateTimeInApp: (state: State) => {
-      state.timeInApp = Date.now() / 1000;
+      state.timeInApp = Date.now();
     },
   },
 });

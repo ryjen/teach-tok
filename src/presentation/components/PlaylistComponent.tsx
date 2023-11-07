@@ -16,12 +16,11 @@ export const PlaylistComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    height: 45,
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: "dimgray",
+    backgroundColor: "rgb(52, 52, 52)",
   },
   playlist: {
     flex: 2,

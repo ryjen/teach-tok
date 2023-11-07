@@ -6,6 +6,7 @@ import {
   HeaderComponent,
   PlaylistComponent,
   QuestionBackgroundComponent,
+  TabBarComponent,
 } from "@presentation/components";
 import { QuestionContext } from "@presentation/context";
 import { useNextQuestion, useTimeInApp } from "@domain/hooks";
@@ -93,6 +94,7 @@ export const ForYouScreen = () => {
             <PlaylistComponent />
           </QuestionBackgroundComponent>
         </QuestionContext.Provider>
+        <TabBarComponent />
       </Animated.View>
     </View>
   );

@@ -5,3 +5,4 @@ export * from "./OptionComponent";
 export * from "./QuestionBackgroundComponent";
 export * from "./SearchComponent";
 export * from "./TimeSpentComponent";
+export * from "./TabBarComponent";

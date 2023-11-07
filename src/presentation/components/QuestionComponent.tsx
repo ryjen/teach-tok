@@ -2,31 +2,72 @@ import type { Answer } from "@domain/types";
 import React, { View, Text, StyleSheet } from "react-native";
 import { OptionComponent } from "./OptionComponent";
 import { useQuestionView } from "@presentation/context";
+import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
+import { BadgeIcon } from "./BadgeIcon";
+import { colors } from "@presentation/theme";
 
 export const QuestionComponent = () => {
-  const { question } = useQuestionView();
-
-  console.log(`rendering ${question?.image}`);
+  const question = useQuestionView();
 
   return (
     <View style={styles.container}>
-      <View style={styles.question}>
-        <Text style={styles.questionText}>{question?.question}</Text>
+      <View style={styles.left}>
+        <View style={styles.question}>
+          <Text style={styles.questionText}>{question?.question}</Text>
+        </View>
+        <View style={styles.options}>
+          {question?.options.map((option: Answer) => {
+            return (
+              <OptionComponent
+                style={styles.option}
+                key={option.id}
+                option={option}
+              />
+            );
+          })}
+        </View>
+        <View style={styles.description}>
+          <Text style={styles.user}>{question?.user?.name}</Text>
+          <Text style={styles.descriptionText}>{question?.description}</Text>
+        </View>
       </View>
-      <View style={styles.options}>
-        {question?.options.map((option: Answer) => {
-          return (
-            <OptionComponent
-              style={styles.option}
-              key={option.id}
-              option={option}
-            />
-          );
-        })}
-      </View>
-      <View style={styles.description}>
-        <Text style={styles.user}>{question?.user?.name}</Text>
-        <Text style={styles.descriptionText}>{question?.description}</Text>
+      <View style={styles.right}>
+        <BadgeIcon
+          name="book-open-blank-variant"
+          color={colors.foreground}
+          badge={<Icons name="plus-circle" color="green" size={24} />}
+          badgeStyle={{
+            position: "relative",
+            marginTop: -15,
+            backgroundColor: "white",
+            borderRadius: 24,
+          }}
+          style={styles.icon}
+        />
+        <BadgeIcon
+          name="cards-heart"
+          color={colors.foreground}
+          badge={question?.likes}
+          style={styles.icon}
+        />
+        <BadgeIcon
+          name="chat-processing"
+          color={colors.foreground}
+          badge={question?.comments}
+          style={styles.icon}
+        />
+        <BadgeIcon
+          name="bookmark"
+          color={colors.foreground}
+          badge={question?.bookmarks}
+          style={styles.icon}
+        />
+        <BadgeIcon
+          name="share"
+          color={colors.foreground}
+          badge={question?.shares}
+          style={styles.icon}
+        />
       </View>
     </View>
   );
@@ -34,9 +75,22 @@ export const QuestionComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     padding: 20,
+    flexDirection: "row",
+  },
+  left: {
+    flex: 1,
     justifyContent: "space-evenly",
+    marginRight: 10,
+  },
+  right: {
+    marginLeft: 10,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
+  icon: {
+    marginVertical: 8,
   },
   question: {
     flex: 1,
@@ -47,8 +101,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     padding: 10,
     borderRadius: 6,
-    backgroundColor: "rgba(52, 52, 52, 0.8)",
-    color: "white",
+    backgroundColor: colors.backgroundAlternate,
+    color: colors.foreground,
     fontWeight: "bold",
   },
   options: {
@@ -59,6 +113,6 @@ const styles = StyleSheet.create({
   },
   option: { marginVertical: 5 },
   description: { flex: 0, marginTop: 5 },
-  descriptionText: { color: "white" },
-  user: { color: "white", fontWeight: "bold", fontSize: 16 },
+  descriptionText: { color: colors.foreground },
+  user: { color: colors.foreground, fontWeight: "bold", fontSize: 16 },
 });

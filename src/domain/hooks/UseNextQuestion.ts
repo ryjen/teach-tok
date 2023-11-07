@@ -1,45 +1,35 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addQuestionAction, selectQuestions } from "@data/question";
 import { teachTokApi as api } from "@data/client";
 
-export const useNextQuestion = () => {
-  // use an internal index to track question request tags
-  const [current, setCurrent] = useState(0);
+export const useNextQuestion = (index: number) => {
+  const questions = useSelector(selectQuestions);
 
-  const [isPrefetched, setIsPrefetched] = useState(false);
-
-  console.log(`getting question ${current}`);
-
-  const { data: question, isError, isLoading } = api.useForYouQuery(current);
-
-  // TODO: move prefetch to repository and stay in data layer
-  const prefetch = api.usePrefetch("forYou");
-
-  const prefetchNext = () => {
-    console.log(`prefetching question ${current + 1}`);
-    prefetch(current + 1, { force: true });
-    setIsPrefetched(true);
-  };
-
-  // automatically prefetch
-  useEffect(() => {
-    prefetchNext();
-  }, [prefetchNext]);
-
-  const next = () => {
-    setCurrent(current + 1);
-  };
-
-  const prev = () => {
-    if (current > 0) {
-      setCurrent(current - 1);
-    }
-  };
-
-  return {
-    question,
+  const {
+    data: question,
     isError,
-    isLoading: isLoading || !isPrefetched,
-    next,
-    prev,
-  };
+    isLoading,
+    refetch,
+  } = api.useForYouQuery(index);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (question && isError == false && isLoading == false) {
+      if (
+        // already exists and less the 3 questions exist
+        questions.findIndex((q) => q.id == question.id) !== -1 &&
+        questions.length < 3
+      ) {
+        console.log(`looking for another question`);
+        refetch();
+      } else {
+        console.log(`adding ${question?.id}`);
+        dispatch(addQuestionAction(question));
+      }
+    }
+  }, [dispatch, question, isError, isLoading, questions, refetch]);
+
+  return { questions, isError, isLoading, refetch };
 };

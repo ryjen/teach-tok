@@ -1,9 +1,10 @@
 import React, { View, Text, StyleSheet } from "react-native";
 import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
 import { useQuestionView } from "@presentation/context";
+import { colors } from "@presentation/theme";
 
 export const PlaylistComponent = () => {
-  const { question } = useQuestionView();
+  const question = useQuestionView();
   return (
     <View style={styles.container}>
       <Icons name="play-box-multiple" color="white" size={22} />
@@ -20,11 +21,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: "rgb(52, 52, 52)",
+    backgroundColor: colors.backgroundAlternate,
   },
   playlist: {
     flex: 2,
     marginLeft: 10,
-    color: "white",
+    color: colors.foregroundAlternate,
   },
 });

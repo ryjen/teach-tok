@@ -1,101 +1,78 @@
-import type { QuestionView } from "@presentation/types";
-import React, { useRef } from "react";
-import { StyleSheet, PanResponder, Text, Animated, View } from "react-native";
+import { useState } from "react";
+import React, { StyleSheet, View, FlatList, Dimensions } from "react-native";
 import {
   QuestionComponent,
   HeaderComponent,
   PlaylistComponent,
   QuestionBackgroundComponent,
   TabBarComponent,
+  ErrorComponent,
+  LoadingComponent,
+  EmptyComponent,
 } from "@presentation/components";
 import { QuestionContext } from "@presentation/context";
-import { useNextQuestion, useTimeInApp } from "@domain/hooks";
-import { range as rand } from "@domain/Random";
+import { useNextQuestion } from "@domain/hooks";
 
 export const ForYouScreen = () => {
-  const pan = useRef(new Animated.Value(0)).current;
+  const data = useNextQuestion();
 
-  const {
-    question,
-    isError,
-    isLoading,
-    next: onNext,
-    prev: onPrev,
-  } = useNextQuestion();
+  const { questions, isLoading, isError, refetch: onRefresh } = data;
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        pan.setValue(0);
-      },
-      //onMoveShouldSetPanResponderCapture: (e, state) => Math.abs(state.dy) > 5,
-      onPanResponderMove: (_, state) => {
-        pan.setValue(state.dy);
-      },
-      onPanResponderRelease: (e, state) => {
-        if (state.dy < -50) {
-          onNext();
-          Animated.spring(pan, {
-            toValue: 0,
-            useNativeDriver: false,
-          }).start();
-        } else if (state.dy > 50) {
-          onPrev();
-          Animated.spring(pan, {
-            toValue: 0,
-            useNativeDriver: false,
-          }).start();
-        } else {
-          Animated.spring(pan, {
-            toValue: 0,
-            useNativeDriver: false,
-          }).start();
-        }
-      },
-    }),
-  ).current;
-
-  const timeInApp = useTimeInApp();
+  const [heights, setHeights] = useState({
+    window: Dimensions.get("window").height,
+    tabs: 0,
+  });
 
   if (isError == true) {
-    return <Text>Unable to load question</Text>;
+    return <ErrorComponent style={styles.container} />;
   }
 
   if (isLoading == true) {
-    return <Text>Loading...</Text>;
+    return <LoadingComponent style={styles.container} />;
   }
 
-  if (question == null) {
-    return <Text>No data, please refresh</Text>;
+  if (questions == null) {
+    return <EmptyComponent style={styles.container} />;
   }
 
-  const view: QuestionView = {
-    question,
-    tab: "For You",
-    time: timeInApp,
-    likes: rand(50, 150),
-    comments: rand(50, 150),
-    bookmarks: rand(50, 150),
-    shares: rand(50, 150),
-  };
+  const height = () => heights.window - heights.tabs - 10;
 
   return (
-    <View style={styles.container}>
-      <Animated.View
-        {...panResponder.panHandlers}
-        style={[{ transform: [{ translateY: pan }] }, styles.box]}
-      >
-        <QuestionContext.Provider value={view}>
-          <QuestionBackgroundComponent>
-            <HeaderComponent />
-            <QuestionComponent />
-            <PlaylistComponent />
-          </QuestionBackgroundComponent>
-        </QuestionContext.Provider>
-        <TabBarComponent />
-      </Animated.View>
+    <View
+      style={styles.container}
+      onLayout={({ nativeEvent }) => {
+        //setHeights({ window: nativeEvent.layout.height });
+      }}
+    >
+      <HeaderComponent style={styles.header} />
+      <FlatList
+        style={[styles.list]}
+        data={questions}
+        renderItem={({ item }) => (
+          <View key={item.id} style={[styles.row, { height: height() }]}>
+            <QuestionContext.Provider value={item}>
+              <QuestionBackgroundComponent>
+                <QuestionComponent />
+                <PlaylistComponent />
+              </QuestionBackgroundComponent>
+            </QuestionContext.Provider>
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        pagingEnabled
+        automaticallyAdjustContentInsets={true}
+        bounces={false}
+        refreshing={isLoading}
+        initialNumToRender={1}
+        onRefresh={onRefresh}
+        showsVerticalScrollIndicator={false}
+      />
+      <TabBarComponent
+        style={styles.footer}
+        onLayout={({ nativeEvent }) => {
+          setHeights({ tabs: nativeEvent.layout.height });
+        }}
+      />
     </View>
   );
 };
@@ -104,7 +81,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  box: {
-    flex: 1,
+  row: {},
+  header: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    zIndex: 1,
   },
+  footer: {},
+  list: {},
 });

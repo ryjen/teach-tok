@@ -6,10 +6,10 @@ import type {
 } from "@data/types";
 import type { Question, User, Answer } from "@domain/types";
 import FastImage from "react-native-fast-image";
+import { range as rand } from "@domain/Random";
 
 export const questionForYou = (data: ForYouResponse) => {
-  // TODO: move to presentation layer
-  console.log(`preloading ${data.image}`);
+  console.log(`preloading image ${data.image}`);
   FastImage.preload([{ uri: data.image, priority: FastImage.priority.high }]);
 
   return <Question>{
@@ -20,6 +20,10 @@ export const questionForYou = (data: ForYouResponse) => {
     question: data.question,
     options: data.options.map(domainAnswer),
     user: domainUser(data.user),
+    likes: rand(50, 150),
+    comments: rand(50, 150),
+    bookmarks: rand(50, 150),
+    shares: rand(50, 150),
   };
 };
 

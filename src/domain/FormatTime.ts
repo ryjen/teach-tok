@@ -6,10 +6,10 @@ export const hms = (timeStamp: number) => {
     return "<1m";
   }
   if (secondsPast < 3600) {
-    return parseInt(secondsPast / 60) + "m";
+    return Math.trunc(secondsPast / 60) + "m";
   }
   if (secondsPast <= 86400) {
-    return parseInt(secondsPast / 3600) + "h";
+    return Math.trunc(secondsPast / 3600) + "h";
   }
-  return `>${parseInt(secondsPast / 3600)}h`;
+  return `>${Math.trunc(secondsPast / 3600)}h`;
 };

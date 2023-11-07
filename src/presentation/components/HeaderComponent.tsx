@@ -1,11 +1,16 @@
+import type { ViewStyle } from "react-native";
 import React, { View, StyleSheet } from "react-native";
 import { TitleComponent } from "./TitleComponent";
 import { SearchComponent } from "./SearchComponent";
 import { TimeSpentComponent } from "./TimeSpentComponent";
 
-export const HeaderComponent = () => {
+interface Props {
+  style?: ViewStyle;
+}
+
+export const HeaderComponent = ({ style }: Props) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TimeSpentComponent style={styles.timer} />
       <TitleComponent />
       <SearchComponent style={styles.search} />

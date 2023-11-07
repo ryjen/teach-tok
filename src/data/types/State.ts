@@ -1,6 +1,8 @@
-import type {Question} from '@domain/types'
+import type { Question } from "@domain/types";
 
 export interface QuestionState {
-  questions: Array<Question>
-  currentQuestion: number
+  data: Array<Question>;
+  current: number;
+  isLoading: boolean;
+  isError: boolean;
 }

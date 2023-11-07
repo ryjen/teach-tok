@@ -9,4 +9,8 @@ export interface Question {
   question: string;
   options: Array<Answer>;
   user: User;
+  likes: number;
+  comments: number;
+  bookmarks: number;
+  shares: number;
 }

@@ -1,17 +1,20 @@
+import type { ViewStyle } from "react-native";
 import React, { StyleSheet, View, Text } from "react-native";
 import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
 import { hms } from "@domain/FormatTime";
-import { useQuestionView } from "@presentation/context";
+import { useTimeInApp } from "@domain/hooks";
+import { colors } from "@presentation/theme";
 
 interface Props {
-  style: React.CSSProperties;
+  style?: ViewStyle;
 }
 
 export const TimeSpentComponent = ({ style }: Props) => {
-  const { time } = useQuestionView();
+  const time = useTimeInApp();
+
   return (
     <View style={[styles.container, style]}>
-      <Icons name={"clock"} size={24} color={styles.text.color} />
+      <Icons name={"clock"} size={24} color={colors.foreground} />
       <Text style={styles.text}>{hms(time)}</Text>
     </View>
   );
@@ -23,6 +26,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 5,
-    color: "white",
+    color: colors.foreground,
   },
 });

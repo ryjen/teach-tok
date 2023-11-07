@@ -8,7 +8,9 @@ interface Props {
 }
 
 export const QuestionBackgroundComponent = ({ children }: Props) => {
-  const { question } = useQuestionView();
+  const question = useQuestionView();
+
+  console.log(`rendering ${question?.image}`);
 
   return (
     <View style={styles.container}>
@@ -24,6 +26,7 @@ export const QuestionBackgroundComponent = ({ children }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 70,
   },
   content: {
     flex: 3,

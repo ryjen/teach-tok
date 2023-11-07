@@ -1,7 +1,9 @@
+import type { ViewStyle } from "react-native";
 import React, { View, Text, StyleSheet } from "react-native";
+import { colors } from "@presentation/theme";
 
 interface Props {
-  style: React.CSSProperties;
+  style?: ViewStyle;
 }
 
 export const TitleComponent = ({ style }: Props) => (
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    color: "white",
+    color: colors.foreground,
     fontSize: 16,
     marginBottom: 5,
     fontWeight: "bold",
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 0,
     marginLeft: 6,
     marginRight: 6,
-    borderBottomColor: "white",
+    borderBottomColor: colors.foreground,
     borderBottomWidth: 4,
   },
 });

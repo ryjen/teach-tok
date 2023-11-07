@@ -3,6 +3,7 @@ import React, { StyleSheet, View } from "react-native";
 import { ForYouScreen } from "@presentation/screen";
 import { store } from "@application/store";
 import { Provider } from "react-redux";
+import { colors, scheme } from "@presentation/theme";
 
 export default function App() {
   return (
@@ -10,7 +11,7 @@ export default function App() {
       <Provider store={store}>
         <ForYouScreen />
       </Provider>
-      <StatusBar style="auto" />
+      <StatusBar style={scheme.inverse} />
     </View>
   );
 }
@@ -20,5 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     padding: 0,
+    backgroundColor: colors.background,
   },
 });

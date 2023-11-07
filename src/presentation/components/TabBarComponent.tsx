@@ -1,25 +1,49 @@
-import type { CSSProperties } from "react-native";
-import React, { View, StyleSheet } from "react-native";
+import type { ViewStyle } from "react-native";
+import React, { View, StyleSheet, Text } from "react-native";
 import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
+import { colors } from "@presentation/theme";
 
 interface Props {
-  style: CSSProperties;
+  style?: ViewStyle;
 }
 
-export const TabBarComponent = ({ style }: Props) => (
-  <View style={[styles.container, style]}>
-    <Icons name="home" size={32} color="white" />
-    <Icons name="compass" size={32} color="white" />
-    <Icons name="timer" size={32} color="white" />
-    <Icons name="bookmark" size={32} color="white" />
-    <Icons name="account-circle" size={32} color="white" />
-  </View>
-);
+type Glyph = keyof typeof Icons.glyphMap;
+
+export const TabBarComponent = ({ style }: Props) => {
+  const icons = Object.entries({
+    home: "Home",
+    compass: "Discover",
+    timer: "Activity",
+    bookmark: "Bookmarks",
+    "account-circle": "Profile",
+  });
+
+  return (
+    <View style={[styles.container, style]}>
+      {icons.map(([icon, title]) => (
+        <View key={icon} style={styles.icon}>
+          <Icons name={icon as Glyph} size={36} color={colors.foreground} />
+          <Text style={styles.title}>{title}</Text>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.background,
     flexDirection: "row",
     justifyContent: "space-evenly",
+    alignItems: "center",
+    padding: 10,
+  },
+  title: {
+    color: colors.foreground,
+    fontSize: 12,
+  },
+  icon: {
+    flexDirection: "column",
     alignItems: "center",
   },
 });

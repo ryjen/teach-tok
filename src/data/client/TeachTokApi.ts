@@ -8,11 +8,13 @@ export const teachTokApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://cross-platform.rp.devfactory.com",
   }),
-  tagTypes: ["Question"],
   endpoints: (builder) => ({
     forYou: builder.query<Question, number>({
       query: () => "/for_you",
-      providesTags: (result, error, tag) => [{ type: "Question", id: tag }],
+      onCacheEntryAdded: (data, key) => {
+        console.log(`caching ${key}.${data.id}`);
+        return `${key}.${data.id}`;
+      },
       transformResponse: (data: ForYouResponse): Question =>
         questionForYou(data),
     }),

@@ -14,14 +14,19 @@ export const selectForYouView = createSelector(
   (state: ForYouState): ViewState => state.view,
 );
 
-export type OptionStatus = boolean | null;
-
-export const selectOptionStatus = (option: Option) =>
+export const selectOptionIsSelected = (option: Option) =>
   createSelector(
     (state: RootState): ViewState => state.forYou.view,
-    (state: ViewState): OptionStatus => {
-      const index = state.selected.findIndex(selectById(option.id));
-      if (index < 0) return null;
-      return index !== 0;
-    },
+    (state: ViewState): boolean => state.selected.some(selectById(option.id)),
   );
+
+export const selectQuestionIncomplete = createSelector(
+  (state: RootState): ViewState => state.forYou.view,
+  (state: ViewState): boolean => state.numCorrect > state.selected.length,
+);
+
+export const selectQuestionCorrect = createSelector(
+  (state: RootState): ViewState => state.forYou.view,
+  (state: ViewState): boolean =>
+    state.selected.every((option) => option.isCorrect),
+);

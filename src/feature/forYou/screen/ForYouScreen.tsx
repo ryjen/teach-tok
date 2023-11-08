@@ -1,5 +1,5 @@
-import type { ViewToken } from "react-native";
-import { useState } from "react";
+import type { ViewToken, LayoutChangeEvent } from "react-native";
+import { useState, useRef } from "react";
 import React, { StyleSheet, View, FlatList, Dimensions } from "react-native";
 import {
   HeaderComponent,
@@ -7,7 +7,7 @@ import {
   ErrorComponent,
   LoadingComponent,
   EmptyComponent,
-} from "@presentation/components";
+} from "@presentation/component";
 import {
   QuestionComponent,
   PlaylistComponent,
@@ -21,7 +21,34 @@ export const ForYouScreen = () => {
 
   const { questions, isLoading, isError, refetch } = useLoadQuestions(index);
 
-  const height = () => Dimensions.get("window").height;
+  const onChange = useRef(
+    ({
+      viewableItems,
+    }: {
+      viewableItems: Array<ViewToken>;
+      changed: Array<ViewToken>;
+    }) => {
+      if (
+        viewableItems.length < 2 ||
+        viewableItems[0].index < viewableItems[1].index
+      ) {
+        setIndex(index + 1);
+      } else if (
+        index > 0 &&
+        viewableItems.length > 2 &&
+        viewableItems[0].index > viewableItems[1].index
+      ) {
+        setIndex(index - 1);
+      }
+    },
+  );
+
+  const onRefresh = () => {
+    setIndex(0);
+    refetch();
+  };
+
+  const height = Dimensions.get("window").height - 10;
 
   if (isError == true) {
     return <ErrorComponent style={styles.container} />;
@@ -34,26 +61,6 @@ export const ForYouScreen = () => {
   if (questions == null || questions.length === 0) {
     return <EmptyComponent style={styles.container} />;
   }
-
-  const onChange = ({
-    viewableItems,
-    changed,
-  }: {
-    viewableItems: Array<ViewToken>;
-    changed: Array<ViewToken>;
-  }) => {
-    //setIndex(questions.indexOf(viewableItems[0].item));
-    console.log("Visible items are", viewableItems);
-    console.log("Changed in this iteration", changed);
-  };
-
-  const onRefresh = () => {
-    refetch();
-    if (index > 0) {
-      setIndex(index - 1);
-    }
-  };
-
   return (
     <View style={styles.container}>
       <HeaderComponent style={styles.header} />
@@ -61,7 +68,7 @@ export const ForYouScreen = () => {
         style={[styles.list]}
         data={questions}
         renderItem={({ item }) => (
-          <View key={item.id} style={[styles.row, { height: height() }]}>
+          <View key={item.id} style={[styles.row, { height }]}>
             <QuestionContext.Provider value={item}>
               <QuestionBackgroundComponent>
                 <QuestionComponent />
@@ -72,7 +79,7 @@ export const ForYouScreen = () => {
         )}
         keyExtractor={(item) => item.id.toString()}
         pagingEnabled
-        onViewableItemsChanged={onChange}
+        onViewableItemsChanged={onChange.current}
         automaticallyAdjustContentInsets={true}
         bounces={false}
         refreshing={isLoading}

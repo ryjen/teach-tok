@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addQuestion } from "@feature/forYou/state";
-import { selectQuestions, selectById } from "@feature/forYou/selector";
-import { default as repository } from "@feature/forYou/repository";
+import { selectQuestions } from "@feature/forYou/selector";
+import { repository } from "@feature/forYou/repository";
 
 export const useLoadQuestions = (index: number) => {
   const dispatch = useDispatch();
 
   const data = repository.forYou(index);
+
+  const [prefetch, setPrefetch] = useState(3);
 
   const { data: question, isError, isLoading, refetch } = data;
 
@@ -15,18 +17,14 @@ export const useLoadQuestions = (index: number) => {
 
   useEffect(() => {
     if (question != null && isError == false && isLoading == false) {
-      if (
-        // already exists and less the 3 questions exist for a demo
-        // TODO: request backend change
-        questions.some(selectById(question.id)) == true &&
-        questions.length < 3
-      ) {
+      console.log(`loaded ${question.id}`);
+      dispatch(addQuestion(question));
+      if (questions.length < prefetch) {
         refetch();
-      } else {
-        dispatch(addQuestion(question));
+        setPrefetch(prefetch + Math.floor(prefetch / 2));
       }
     }
-  }, [dispatch, question, isError, isLoading, questions, refetch]);
+  }, [questions, isError, isLoading, refetch, question, dispatch]);
 
   return { questions, isError, isLoading, refetch };
 };

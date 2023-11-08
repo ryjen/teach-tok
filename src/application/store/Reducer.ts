@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { teachTokApi } from "@data/client";
 import { reducer as app } from "@application/state";
-import { default as forYou } from "@feature/forYou/state";
+import { reducer as forYou } from "@feature/forYou/state";
 
 export const rootReducer = combineReducers({
   app,

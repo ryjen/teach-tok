@@ -1,5 +1,3 @@
-export * from "./DataRepository";
-
 import { dataRepository } from "./DataRepository";
 
-export default dataRepository;
+export const repository = dataRepository;

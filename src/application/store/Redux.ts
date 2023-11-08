@@ -6,5 +6,7 @@ import { rootMiddleware } from "./Middleware";
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(rootMiddleware),
+    getDefaultMiddleware()
+      .prepend(rootMiddleware.prepend)
+      .concat(rootMiddleware.append),
 });

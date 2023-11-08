@@ -2,7 +2,7 @@ import React, { View, Text, StyleSheet } from "react-native";
 import { OptionComponent } from "./OptionComponent";
 import { useQuestionContext } from "@feature/forYou/context";
 import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
-import { BadgeIcon } from "@presentation/components/BadgeIcon";
+import { BadgeIcon } from "@presentation/component";
 import { colors } from "@presentation/theme";
 
 export const QuestionComponent = () => {

@@ -14,7 +14,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     addQuestion: (state: State, action: PayloadAction<ForYouResponse>) => {
-      if (state.questions.some(selectById(action.payload.id))) {
+      if (state.questions.some(selectById(action.payload.id)) == false) {
         state.questions.push(questionForYou(action.payload));
       }
       // TODO: handle replacing stale data

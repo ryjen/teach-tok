@@ -1,15 +1,16 @@
-import type { ViewStyle } from "react-native";
+import type { ViewStyle, LayoutChangeEvent } from "react-native";
 import React, { View, StyleSheet, Text } from "react-native";
 import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
 import { colors } from "@presentation/theme";
 
 interface Props {
   style?: ViewStyle;
+  onLayout?: LayoutChangeEvent;
 }
 
 type Glyph = keyof typeof Icons.glyphMap;
 
-export const TabBarComponent = ({ style }: Props) => {
+export const TabBarComponent = ({ style, onLayout }: Props) => {
   const icons = Object.entries({
     home: "Home",
     compass: "Discover",
@@ -19,7 +20,7 @@ export const TabBarComponent = ({ style }: Props) => {
   });
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]} onLayout={onLayout}>
       {icons.map(([icon, title]) => (
         <View key={icon} style={styles.icon}>
           <Icons name={icon as Glyph} size={36} color={colors.foreground} />

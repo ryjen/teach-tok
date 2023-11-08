@@ -1,5 +1,5 @@
-import type { Answer } from "./Answer";
 import type { User } from "./User";
+import type { Option } from "./Option";
 
 export interface Question {
   id: number;
@@ -7,7 +7,7 @@ export interface Question {
   description: string;
   image: string;
   question: string;
-  options: Array<Answer>;
+  options: Array<Option>;
   user: User;
   likes: number;
   comments: number;

@@ -3,4 +3,5 @@ import { createContext, useContext } from "react";
 
 export const QuestionContext = createContext<Question | null>(null);
 
-export const useQuestionView = (): Question => useContext(QuestionContext);
+export const useQuestionContext = (): Question | null =>
+  useContext(QuestionContext);

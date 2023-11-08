@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { StyleSheet, View } from "react-native";
-import { ForYouScreen } from "@presentation/screen";
+import { ForYouScreen } from "@feature/forYou/screen";
 import { store } from "@application/store";
 import { Provider } from "react-redux";
 import { colors, scheme } from "@presentation/theme";

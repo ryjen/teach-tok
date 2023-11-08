@@ -7,7 +7,8 @@
       "@application/*": ["./src/application/*"],
       "@domain/*": ["./src/domain/*"],
       "@presentation/*": ["./src/presentation/*"],
-      "@data/*": ["./src/data/*"]
+      "@data/*": ["./src/data/*"],
+      "@feature/*": ["./src/feature/*"]
     }
   }
 }

@@ -1,3 +1,3 @@
-export type * from './Question'
-export type * from './Answer'
-export type * from './User'
+export type * from "./Question";
+export type * from "./Option";
+export type * from "./User";

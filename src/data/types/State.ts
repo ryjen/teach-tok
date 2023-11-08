@@ -1,8 +1,6 @@
-import type { Question } from "@domain/types";
+import type { DataState, ViewState } from "@feature/forYou/types";
 
-export interface QuestionState {
-  data: Array<Question>;
-  current: number;
-  isLoading: boolean;
-  isError: boolean;
+export interface ForYouState {
+  data: DataState;
+  view: ViewState;
 }

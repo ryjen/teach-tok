@@ -1,13 +1,12 @@
-import type { Answer } from "@domain/types";
 import React, { View, Text, StyleSheet } from "react-native";
 import { OptionComponent } from "./OptionComponent";
-import { useQuestionView } from "@presentation/context";
+import { useQuestionContext } from "@feature/forYou/context";
 import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
-import { BadgeIcon } from "./BadgeIcon";
+import { BadgeIcon } from "@presentation/components/BadgeIcon";
 import { colors } from "@presentation/theme";
 
 export const QuestionComponent = () => {
-  const question = useQuestionView();
+  const question = useQuestionContext();
 
   return (
     <View style={styles.container}>
@@ -16,7 +15,7 @@ export const QuestionComponent = () => {
           <Text style={styles.questionText}>{question?.question}</Text>
         </View>
         <View style={styles.options}>
-          {question?.options.map((option: Answer) => {
+          {question?.options.map((option) => {
             return (
               <OptionComponent
                 style={styles.option}

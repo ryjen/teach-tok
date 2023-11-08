@@ -1,5 +1,4 @@
-
 export interface OptionResponse {
-  id: string,
-  answer: string
+  id: string;
+  answer: string;
 }

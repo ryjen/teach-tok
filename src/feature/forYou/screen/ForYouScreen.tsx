@@ -1,27 +1,27 @@
+import type { ViewToken } from "react-native";
 import { useState } from "react";
 import React, { StyleSheet, View, FlatList, Dimensions } from "react-native";
 import {
-  QuestionComponent,
   HeaderComponent,
-  PlaylistComponent,
-  QuestionBackgroundComponent,
   TabBarComponent,
   ErrorComponent,
   LoadingComponent,
   EmptyComponent,
 } from "@presentation/components";
-import { QuestionContext } from "@presentation/context";
-import { useNextQuestion } from "@domain/hooks";
+import {
+  QuestionComponent,
+  PlaylistComponent,
+  QuestionBackgroundComponent,
+} from "@feature/forYou/component";
+import { QuestionContext } from "@feature/forYou/context";
+import { useLoadQuestions } from "@feature/forYou/hook";
 
 export const ForYouScreen = () => {
-  const data = useNextQuestion();
+  const [index, setIndex] = useState(0);
 
-  const { questions, isLoading, isError, refetch: onRefresh } = data;
+  const { questions, isLoading, isError, refetch } = useLoadQuestions(index);
 
-  const [heights, setHeights] = useState({
-    window: Dimensions.get("window").height,
-    tabs: 0,
-  });
+  const height = () => Dimensions.get("window").height;
 
   if (isError == true) {
     return <ErrorComponent style={styles.container} />;
@@ -31,19 +31,31 @@ export const ForYouScreen = () => {
     return <LoadingComponent style={styles.container} />;
   }
 
-  if (questions == null) {
+  if (questions == null || questions.length === 0) {
     return <EmptyComponent style={styles.container} />;
   }
 
-  const height = () => heights.window - heights.tabs - 10;
+  const onChange = ({
+    viewableItems,
+    changed,
+  }: {
+    viewableItems: Array<ViewToken>;
+    changed: Array<ViewToken>;
+  }) => {
+    //setIndex(questions.indexOf(viewableItems[0].item));
+    console.log("Visible items are", viewableItems);
+    console.log("Changed in this iteration", changed);
+  };
+
+  const onRefresh = () => {
+    refetch();
+    if (index > 0) {
+      setIndex(index - 1);
+    }
+  };
 
   return (
-    <View
-      style={styles.container}
-      onLayout={({ nativeEvent }) => {
-        //setHeights({ window: nativeEvent.layout.height });
-      }}
-    >
+    <View style={styles.container}>
       <HeaderComponent style={styles.header} />
       <FlatList
         style={[styles.list]}
@@ -60,6 +72,7 @@ export const ForYouScreen = () => {
         )}
         keyExtractor={(item) => item.id.toString()}
         pagingEnabled
+        onViewableItemsChanged={onChange}
         automaticallyAdjustContentInsets={true}
         bounces={false}
         refreshing={isLoading}
@@ -67,12 +80,7 @@ export const ForYouScreen = () => {
         onRefresh={onRefresh}
         showsVerticalScrollIndicator={false}
       />
-      <TabBarComponent
-        style={styles.footer}
-        onLayout={({ nativeEvent }) => {
-          setHeights({ tabs: nativeEvent.layout.height });
-        }}
-      />
+      <TabBarComponent style={styles.footer} />
     </View>
   );
 };

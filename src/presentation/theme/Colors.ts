@@ -8,11 +8,13 @@ export interface ThemeColors {
   foregroundInverse: string;
   warning: string;
   error: string;
+  success: string;
 }
 
 const commonColors = {
   error: "red",
   warning: "orange",
+  success: "green",
 };
 
 export const darkColors = <ThemeColors>{

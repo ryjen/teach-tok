@@ -4,10 +4,10 @@ A demo application for displaying multiple-choice questions in a TicTok style in
 
 ## Notes
 
-### clean architecture
-
+- clean architecture as a foundation
+- feature based modules
 - Separation of application layers
-- data flows from data layer, to domain, to application, to presentation
+- data flows in one direction from data layer, to domain, to application, to presentation
 - redux actions dispatch data flow through the layers
 - could use dependency injection and immutables but left out for now
 - use cases become react hooks

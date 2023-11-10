@@ -2,6 +2,10 @@
 
 A demo application for displaying multiple-choice questions in a TicTok style interface.
 
+Made with ♥ in VIM.
+
+![screenshot](doc/screenshot.png)
+
 ## Notes
 
 - clean architecture as a foundation
@@ -16,8 +20,8 @@ A demo application for displaying multiple-choice questions in a TicTok style in
 
 **design**:
 
-- reuses caching features of network queries for scroll performance
-- maintains an internal sequential index for caching
+- reuses caching features of network queries
+- maintains an internal cache of prefetched items
 
 **process**:
 
@@ -47,6 +51,11 @@ A demo application for displaying multiple-choice questions in a TicTok style in
 - a up swipe will display the next prefetched question
 - a down swipe will display the previous question in cache
 
-## backend
+## Design Flaws
 
-- API is not idempotent, meaning returns different result for same arguments
+- backend returns a single result
+-
+
+## Testing
+
+- left out, my code is perfect, not using CI

@@ -21,10 +21,9 @@ const slice = createSlice({
     },
     addAnswers: (state: State, action: PayloadAction<RevealResponse>) => {
       const { id, correct_options: options } = action.payload;
+      const question = state.questions.find(selectById(id));
 
       const correct = new Set<string>(options.map((opt) => opt.id));
-
-      const question = state.questions.find(selectById(id));
 
       // TODO: immutable
       question?.options.forEach((opt) => {

@@ -1,13 +1,7 @@
 import type { ViewStyle } from "react-native";
 import type { Option } from "@domain/types";
 import { useState } from "react";
-import React, {
-  View,
-  Pressable,
-  StyleSheet,
-  Text,
-  Animated,
-} from "react-native";
+import React, { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { toggleOption as toggle } from "@feature/forYou/state";
 import { MaterialCommunityIcons as Icons } from "@expo/vector-icons";
@@ -15,11 +9,11 @@ import { colors } from "@presentation/theme";
 
 interface Props {
   option: Option;
-  disabled: boolean;
+  disabled?: boolean;
   style?: ViewStyle;
 }
 
-export const OptionComponent = ({ option, disabled, style }: Props) => {
+export const OptionComponent = ({ option, style }: Props) => {
   const dispatch = useDispatch();
 
   const [isSelected, setSelected] = useState(false);
@@ -33,8 +27,7 @@ export const OptionComponent = ({ option, disabled, style }: Props) => {
 
   return (
     <View style={[styles.container, style, interactionStyle]}>
-      <Pressable
-        disabled={disabled}
+      <TouchableOpacity
         onPress={() => {
           dispatch(toggle(option));
           setSelected(isSelected == true ? false : true);
@@ -50,7 +43,7 @@ export const OptionComponent = ({ option, disabled, style }: Props) => {
             />
           </View>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

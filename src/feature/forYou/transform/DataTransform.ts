@@ -1,7 +1,7 @@
 import type { Question, User, Option } from "@domain/types";
 import type { ForYouResponse, UserResponse, OptionResponse } from "@data/types";
 import FastImage from "react-native-fast-image";
-import { range as rand } from "@domain/Random";
+import { range as rand, shuffler } from "@domain/Random";
 
 export const questionForYou = (data: ForYouResponse) => {
   FastImage.preload([{ uri: data.image, priority: FastImage.priority.high }]);
@@ -12,7 +12,7 @@ export const questionForYou = (data: ForYouResponse) => {
     description: data.description,
     image: data.image,
     question: data.question,
-    options: data.options.map(optionFromResponse),
+    options: data.options.map(optionFromResponse).sort(shuffler),
     answers: [],
     user: userFromResponse(data.user),
     likes: rand(50, 150),

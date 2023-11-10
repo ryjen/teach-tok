@@ -5,7 +5,7 @@ import { colors } from "@presentation/theme";
 
 interface Props {
   style?: ViewStyle;
-  onLayout?: LayoutChangeEvent;
+  onLayout?: (event: LayoutChangeEvent) => void;
 }
 
 type Glyph = keyof typeof Icons.glyphMap;

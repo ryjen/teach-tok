@@ -5,3 +5,4 @@ export * from "./TabBarComponent";
 export * from "./ErrorComponent";
 export * from "./LoadingComponent";
 export * from "./EmptyComponent";
+export * from "./BadgeIcon";

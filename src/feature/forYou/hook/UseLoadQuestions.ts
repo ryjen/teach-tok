@@ -1,30 +1,45 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addQuestion } from "@feature/forYou/state";
-import { selectQuestions } from "@feature/forYou/selector";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addQuestion, setError } from "@feature/forYou/state";
 import { repository } from "@feature/forYou/repository";
 
-export const useLoadQuestions = (index: number) => {
+export const useLoadQuestions = () => {
   const dispatch = useDispatch();
+
+  const [index, setIndex] = useState(0);
+
+  const getNextDelay = () => {
+    return Math.min(2 ** index * 2000, 60000);
+  };
 
   const data = repository.forYou(index);
 
-  const [prefetch, setPrefetch] = useState(3);
+  const { data: question, isError, isLoading, isUninitialized, refetch } = data;
 
-  const { data: question, isError, isLoading, refetch } = data;
-
-  const questions = useSelector(selectQuestions);
+  if (
+    question != null &&
+    isError == false &&
+    isLoading == false &&
+    isUninitialized == false
+  ) {
+    console.log(`loaded ${question.id}`);
+    dispatch(addQuestion(question));
+  }
 
   useEffect(() => {
-    if (question != null && isError == false && isLoading == false) {
-      console.log(`loaded ${question.id}`);
-      dispatch(addQuestion(question));
-      if (questions.length < prefetch) {
-        refetch();
-        setPrefetch(prefetch + Math.floor(prefetch / 2));
-      }
-    }
-  }, [questions, isError, isLoading, refetch, question, dispatch]);
+    const timer = setTimeout(() => {
+      console.log(`prefetching ${index}`);
+      setIndex(index + 1);
+      refetch();
+    }, getNextDelay());
 
-  return { questions, isError, isLoading, refetch };
+    return () => clearTimeout(timer);
+  }, [dispatch, index]);
+
+  const reset = () => {
+    setIndex(0);
+    refetch();
+  };
+
+  return { index, isError, isLoading, isUninitialized, reset };
 };

@@ -1,6 +1,8 @@
 # TeachTok
 
-A demo application for displaying multiple-choice questions in a TicTok style interface.
+An application for displaying multiple-choice questions in a TicTok style interface.
+
+(A take home test).
 
 Made with ♥ in VIM.
 
@@ -8,54 +10,40 @@ Made with ♥ in VIM.
 
 ## Notes
 
-- clean architecture as a foundation
-- feature based modules
-- Separation of application layers
+- clean architecture as a foundation, separation of application layers
+- feature based modules ([forYou](src/feature/forYou))
 - data flows in one direction from data layer, to domain, to application, to presentation
 - redux actions dispatch data flow through the layers
-- could use dependency injection and immutables but left out for now
-- use cases become react hooks
+- dependency injection and immutables but left out for now
+- use case hooks
 
 ### get next question
 
 **design**:
 
-- reuses caching features of network queries
-- maintains an internal cache of prefetched items
+The app maintains an internal cache of prefetched items.
+
+The prefetching is building the internal cache for swiping.
+
+API calls will prefetch using an exponential backoff algorithm.
 
 **process**:
 
 - use cases makes current request for data
 - maps the data to the domain layer and preloads the image
-- prefetches the next by repeating in the background
+- prefetches the next
 
 ### time in app
 
 - keeps a counter in redux store
-- sets a timer ever minute
+- sets a timer for every minute
 - calculates difference
 - dispatch redux action to update UI
 
-### UI
-
-- colors separated for theming
-- 'for you' screen is the home tab
-- areas in screen are components
-- data loaded from a use case
-- loading, empty and error states handled
-- data from the domain layer combined and provided in a context for components
-
-### scrolling
-
-- a gesture handler in the 'for you' screen detects swipes up and down
-- a up swipe will display the next prefetched question
-- a down swipe will display the previous question in cache
-
 ## Design Flaws
 
-- backend returns a single result
--
+- backend returns a single random result, not idempotent
 
 ## Testing
 
-- left out, my code is perfect, not using CI
+- left out, not using CI, my code is perfect,

@@ -13,18 +13,18 @@ const forYou = (index: number): ForYouResponse => {
 
   return {
     type: "mcq",
-    id: rand(800, 999),
+    id: rand(1000, 9999),
     playlist: `A playlist ${rand(10, 99)}`,
     description: `This is a randomly generated test question ${index}`,
-    image: `https://picsum.photos/200/300`,
+    image: `https://picsum.photos/200/300?index=${rand(1000, 9999)}`,
     question: `What is ${a} + ${b}?`,
     options: [
       <OptionResponse>{
-        id: rand(500, 699).toString(),
+        id: rand(100, 999).toString(),
         answer: `${a - b}`,
       },
       <OptionResponse>{
-        id: rand(500, 699).toString(),
+        id: rand(100, 999).toString(),
         answer: `${a * b}`,
       },
       <OptionResponse>{
@@ -34,7 +34,7 @@ const forYou = (index: number): ForYouResponse => {
     ],
     user: {
       name: "Test User",
-      avatar: "https://picsum.photos/50/50",
+      avatar: `https://picsum.photos/50/50?index=${index}`,
     },
   };
 };

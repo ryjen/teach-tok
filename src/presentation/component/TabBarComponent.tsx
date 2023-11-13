@@ -12,7 +12,6 @@ type Glyph = keyof typeof Icons.glyphMap;
 
 export const TabBarComponent = ({ style, onLayout }: Props) => {
   const icons = Object.entries({
-    home: "Home",
     compass: "Discover",
     timer: "Activity",
     bookmark: "Bookmarks",
@@ -21,10 +20,18 @@ export const TabBarComponent = ({ style, onLayout }: Props) => {
 
   return (
     <View style={[styles.container, style]} onLayout={onLayout}>
+      <View style={styles.icon}>
+        <Icons name="home" size={36} color={colors.foreground} />
+        <Text style={styles.title}>Home</Text>
+      </View>
       {icons.map(([icon, title]) => (
         <View key={icon} style={styles.icon}>
-          <Icons name={icon as Glyph} size={36} color={colors.foreground} />
-          <Text style={styles.title}>{title}</Text>
+          <Icons
+            name={icon as Glyph}
+            size={36}
+            color={colors.backgroundAlternate}
+          />
+          <Text style={styles.titleAlt}>{title}</Text>
         </View>
       ))}
     </View>
@@ -41,6 +48,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.foreground,
+    fontSize: 12,
+  },
+  titleAlt: {
+    color: colors.backgroundInverse,
     fontSize: 12,
   },
   icon: {

@@ -8,23 +8,13 @@ export const useLoadQuestions = () => {
 
   const [index, setIndex] = useState(0);
 
-  const getNextDelay = () => {
-    return Math.min(2 ** index * 2000, 60000);
-  };
-
-  const data = repository.forYou(index);
-
-  const { data: question, isError, isLoading, isUninitialized, refetch } = data;
-
-  if (
-    question != null &&
-    isError == false &&
-    isLoading == false &&
-    isUninitialized == false
-  ) {
-    console.log(`loaded ${question.id}`);
-    dispatch(addQuestion(question));
-  }
+  const {
+    data: question,
+    isError,
+    isLoading,
+    isUninitialized,
+    refetch,
+  } = repository.forYou(index);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,9 +23,22 @@ export const useLoadQuestions = () => {
       refetch();
     }, getNextDelay());
 
-    return () => clearTimeout(timer);
-  }, [dispatch, index]);
+    if (
+      question != null &&
+      isError == false &&
+      isLoading == false &&
+      isUninitialized == false
+    ) {
+      console.log(`loaded ${question.id}`);
+      dispatch(addQuestion(question));
+    }
 
+    return () => clearTimeout(timer);
+  }, [dispatch, index, setIndex, refetch, getNextDelay]);
+
+  const getNextDelay = () => {
+    return Math.min(2 ** index * 2000, 60000);
+  };
   const reset = () => {
     setIndex(0);
     refetch();

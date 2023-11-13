@@ -1,6 +1,6 @@
-import { queryForYou, fetchReveal } from "./RemoteDataSource";
+import { queryForYou, fetchReveal } from "./LocalDataSource";
 
 export const dataRepository = {
-  forYou: (index: number) => queryForYou(index),
-  reveal: (id: string) => fetchReveal(id),
+  forYou: queryForYou,
+  reveal: fetchReveal,
 };

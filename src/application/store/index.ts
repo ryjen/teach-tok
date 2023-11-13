@@ -1,2 +1,1 @@
-
-export {store} from './Redux'
+export { store } from "./Redux";

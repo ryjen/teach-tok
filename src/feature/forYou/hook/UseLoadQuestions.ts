@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addQuestion, setError } from "@feature/forYou/state";
+import { addQuestion } from "@feature/forYou/state";
 import { repository } from "@feature/forYou/repository";
 
 export const useLoadQuestions = () => {

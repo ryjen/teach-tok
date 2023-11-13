@@ -33,4 +33,4 @@ const slice = createSlice({
 
 export const viewReducer = slice.reducer;
 
-export const { toggleOption, setError } = slice.actions;
+export const { toggleOption } = slice.actions;

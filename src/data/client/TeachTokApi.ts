@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const teachTokApi = createApi({
   reducerPath: "teachTokApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://cross-platform.rp.devfactory.com",
+    baseUrl: `https://${process.env.REACT_APP_API_DOMAIN}`,
   }),
   endpoints: (builder) => ({
     forYou: builder.query<ForYouResponse, number>({

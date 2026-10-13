@@ -2,7 +2,7 @@
 
 An application for displaying multiple-choice questions in a TicTok style interface.
 
-(A take home test).
+**Historical take-home exercise.** This repository preserves a time-boxed demonstration rather than a maintained application. It is not presented as current production-ready architecture or delivery practice.
 
 Made with ♥ in VIM.
 
@@ -46,4 +46,4 @@ API calls will prefetch using an exponential backoff algorithm.
 
 ## Testing
 
-- left out, not using CI, my code is perfect,
+- Automated tests and CI were omitted under the original exercise constraints. That omission is a known quality gap, not a recommendation for current projects.

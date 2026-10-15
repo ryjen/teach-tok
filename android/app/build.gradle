@@ -104,9 +104,10 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            // The checked-in debug.keystore is public and must never sign a
+            // distributable release. Keep release unsigned unless the operator
+            // supplies a private signing config through an explicit build setup.
+            // See https://reactnative.dev/docs/signed-apk-android.
             shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

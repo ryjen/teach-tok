@@ -47,3 +47,9 @@ API calls will prefetch using an exponential backoff algorithm.
 ## Testing
 
 - Automated tests and CI were omitted under the original exercise constraints. That omission is a known quality gap, not a recommendation for current projects.
+
+## Android debug signing
+
+The tracked `android/app/debug.keystore` is a **public, shared development key** also used by example applications. It does not establish release provenance. Only the Android `debug` variant references this key; the `release` variant intentionally remains unsigned until private CI or operator-controlled signing is explicitly configured. Do not publish/distribute builds signed with the repository debug key or treat the presence of a keystore as a newly exposed private release credential.
+
+Run `node --test test/release-signing.test.mjs` to verify this static signing boundary. This does not validate a full Android build, exercise behavior, or the historical exercise's redistribution permissions.
